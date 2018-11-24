@@ -5,14 +5,14 @@
 #
 
 # Pull base image
-FROM openjdk:11.0.1-jdk
+FROM oracle/graalvm-ce:1.0.0-rc9
 
 # Env variables
 ENV SCALA_VERSION 2.12.7
 ENV SBT_VERSION 1.2.6
 
 # Scala expects this file
-RUN touch /usr/lib/jvm/java-11-openjdk-amd64/release
+RUN touch ${JAVA_HOME}release
 
 # Install Scala
 ## Piping curl directly in tar
@@ -23,11 +23,8 @@ RUN \
 
 # Install sbt
 RUN \
-  curl -L -o sbt-$SBT_VERSION.deb https://dl.bintray.com/sbt/debian/sbt-$SBT_VERSION.deb && \
-  dpkg -i sbt-$SBT_VERSION.deb && \
-  rm sbt-$SBT_VERSION.deb && \
-  apt-get update && \
-  apt-get install sbt && \
+  curl https://bintray.com/sbt/rpm/rpm | tee /etc/yum.repos.d/bintray-sbt-rpm.repo && \
+  yum install -y sbt && \
   sbt sbtVersion
 
 # Define working directory
