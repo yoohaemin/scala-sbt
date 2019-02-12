@@ -5,11 +5,11 @@
 #
 
 # Pull base image
-FROM oracle/graalvm-ce:1.0.0-rc9
+FROM oracle/graalvm-ce:1.0.0-rc12
 
 # Env variables
-ENV SCALA_VERSION 2.12.7
-ENV SBT_VERSION 1.2.6
+ENV SCALA_VERSION 2.12.8
+ENV SBT_VERSION 1.2.8
 
 # Scala expects this file
 RUN touch ${JAVA_HOME}release
